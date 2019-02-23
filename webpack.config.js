@@ -24,7 +24,8 @@ module.exports = {
                     },
                     {
                         // Interprets `@import` and `url()` like `import/require()` and will resolve them
-                        loader: 'css-loader'
+                        loader: 'css-loader',
+                        options: { url: false }
                     },
                     {
                         // Loader for webpack to process CSS with PostCSS
