@@ -40,6 +40,7 @@ function setupDownloadEventHandlers() {
     const albumsCb = document.getElementById("albums");
 
     qualitySlider.addEventListener("input", updateDownloadInfo);
+    qualitySlider.addEventListener("change", updateDownloadInfo);
     artistsCb.addEventListener("change", updateDownloadInfo);
     albumsCb.addEventListener("change", updateDownloadInfo);
 

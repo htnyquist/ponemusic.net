@@ -1,7 +1,7 @@
 @mixin rangeThumb {
   width: 16px;
   height: 16px;
-  margin: -5px 0  0;
+  margin: -5px 0 0;
   background: #007bff;
   cursor: pointer;
   border: 0 !important;
@@ -22,10 +22,9 @@
 .slider input {
   width: 100%;
   position: absolute;
-  top: 5px;
-  height: 0;
-  z-index: 5;
+  top: -6px;
   -webkit-appearance: none;
+  z-index: 15;
 
   // Thumb
   &::-webkit-slider-thumb {
@@ -39,6 +38,8 @@
 
   &::-ms-thumb {
     @include rangeThumb;
+
+    margin: 0;
   }
 
   // Track
@@ -52,19 +53,22 @@
 
   &::-ms-track {
     @include rangeTrack;
+
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+
+  &::-ms-fill-lower {
+    background: #ced2d6;
+  }
+  &::-ms-fill-upper {
+    background: #ced2d6;
   }
 
   &:focus { // override outline/background on focus
     background: none;
     outline: none;
-  }
-
-  &::-ms-track { // A little somethin' somethin' for IE
-    width: 100%;
-    cursor: pointer;
-    background: transparent;
-    border-color: transparent;
-    color: transparent;
   }
 }
 
@@ -82,12 +86,18 @@
       height: 12px;
       background: #ced2d6;
       border-radius: 25%;
-      z-index: 1;
+      z-index: 10;
     }
   }
 
   div.text-left::before {
     left: 0;
+    @supports (-ms-ime-align:auto) {
+      left: 4px;
+    }
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      left: 4px;
+    }
   }
 
   div.text-center::before {
@@ -98,5 +108,11 @@
 
   div.text-right::before {
     right: 0;
+    @supports (-ms-ime-align:auto) {
+      right: 4px;
+    }
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      right: 4px;
+    }
   }
 }
