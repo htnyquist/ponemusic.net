@@ -1,4 +1,21 @@
-// Full import, could be trimmed down
-@import "~bootstrap/scss/bootstrap";
+// A full import is simpler but makes the bundle a little larger
+//@import "~bootstrap/scss/bootstrap";
 
+// Required
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+// Optionals
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/utilities/spacing";
+@import "~bootstrap/scss/utilities/text";
+@import "~bootstrap/scss/buttons";
+@import "~bootstrap/scss/forms";
+@import "~bootstrap/scss/custom-forms";
+
+
+// Site styles
 @import "content";
+@import "slider";

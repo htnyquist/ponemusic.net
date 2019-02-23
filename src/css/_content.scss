@@ -9,6 +9,25 @@ a {
   text-decoration: underline;
 }
 
+// The main boxes (about, download) on the home page
+.main-box {
+  @extend .m-4;
+  @extend .p-3;
+
+  background-color: rgba(255, 255, 255, 0.87);
+  border-radius: 10px;
+  text-align: left;
+
+  h3 {
+    text-align: center;
+  }
+}
+
+// Labels that should be aligned with preceding text (e.g. for checkboxes after text)
+.baseline-label {
+  align-self: baseline;
+}
+
 #bg {
   background-image: url("/assets/bg.jpg");
   background-size: cover;
@@ -32,13 +51,4 @@ a {
   a {
     @extend .text-muted;
   }
-}
-
-// The main boxes (about, download) on the home page
-.main-box {
-  @extend .m-4;
-  @extend .p-3;
-
-  background-color: rgba(255, 255, 255, 0.87);
-  border-radius: 10px;
 }
