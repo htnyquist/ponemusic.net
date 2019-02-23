@@ -1,0 +1,7 @@
+@import "vars";
+
+@mixin navbar-activate-nth($n) {
+  #navbar a:nth-child(#{$n}) {
+    border-bottom: $navbar-border-active;
+  }
+}

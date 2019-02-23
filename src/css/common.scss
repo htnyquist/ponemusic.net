@@ -1,14 +1,14 @@
-// A full import is simpler but makes the bundle a little larger
-//@import "~bootstrap/scss/bootstrap";
+/* Bootstrap */
 
 // Required
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
 
-// Optionals
+// Modules
 @import "~bootstrap/scss/reboot";
 @import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/nav";
 @import "~bootstrap/scss/utilities/flex";
 @import "~bootstrap/scss/utilities/spacing";
 @import "~bootstrap/scss/utilities/text";
@@ -16,7 +16,15 @@
 @import "~bootstrap/scss/forms";
 @import "~bootstrap/scss/custom-forms";
 
+/* Local styles */
 
-// Site styles
-@import "content";
-@import "slider";
+// Shared CSS
+@import "common/toplevel";
+@import "common/content";
+@import "common/title";
+@import "common/footer";
+@import "common/navbar";
+
+// Per-page styles
+// Putting per-page styles in the common bundle avoids duplicating all of bootstrap in each page's bundle
+@import "index";

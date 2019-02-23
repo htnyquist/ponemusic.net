@@ -1,0 +1,25 @@
+@import "navbar/vars";
+
+#navbar {
+  @extend .nav;
+  @extend .justify-content-center;
+
+  background-color: $navbar-color-background;
+
+  a {
+    @extend .nav-item;
+    @extend .nav-link;
+    @extend .text-dark;
+
+    text-decoration: none;
+    font-family: $font-family-sans-serif;
+    font-weight: 300;
+    font-size: 1.2rem;
+    padding: 0.5rem 0.3rem;
+    margin: 0 0.5rem;
+  }
+
+  a:hover {
+    border-bottom: $navbar-border-hover !important;
+  }
+}

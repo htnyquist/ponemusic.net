@@ -1,18 +1,37 @@
 const path = require('path');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
-    entry: './src/index.js',
+const pages = ['index', 'browse', 'faq'];
+const pageTemplatePlugins = pages.map((page) =>
+    new HtmlWebpackPlugin({
+        filename: page+'.html',
+        template: path.resolve(__dirname, 'src', page+'.html'),
+        chunks: ['common', page],
+    })
+);
+
+const jsFiles = ['common', ...pages];
+const jsEntries = jsFiles.reduce((obj, script) => ({
+    ...obj,
+    [script]: path.resolve(__dirname, 'src', 'js', script + '.js'),
+}), {});
+
+module.exports = (env, argv) => ({
+    entry: jsEntries,
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js',
+        filename: '[name].js',
     },
     devServer: {
         contentBase: "dist",
         watchContentBase: true,
         inline: true
     },
-    //plugins: [new BundleAnalyzerPlugin()],
+    plugins: [
+        ...pageTemplatePlugins,
+        //new BundleAnalyzerPlugin(),
+    ],
     module: {
         rules: [
             {
@@ -43,7 +62,28 @@ module.exports = {
                         loader: 'sass-loader'
                     }
                 ]
+            },
+            {
+                test: /\.html$/,
+                use: [
+                    {
+                        loader: 'html-loader',
+                        options: {
+                            minimize: argv.mode === 'production'
+                        },
+                    },
+                    {
+                        loader: 'posthtml-loader',
+                        options: {
+                            plugins: [
+                                require('posthtml-include')({
+                                    root: path.resolve(__dirname, 'src')
+                                })
+                            ]
+                        }
+                    }
+                ]
             }
         ]
     }
-};
+});

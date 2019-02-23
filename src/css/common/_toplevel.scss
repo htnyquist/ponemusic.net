@@ -1,0 +1,18 @@
+@import "~bootstrap/scss/variables";
+
+body {
+  @extend .text-dark;
+
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column;
+  background-color: #fcfcfc;
+
+  font-family: Lato, $font-family-base;
+}
+
+a {
+  @extend .text-dark;
+
+  text-decoration: underline;
+}

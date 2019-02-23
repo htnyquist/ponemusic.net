@@ -1,0 +1,29 @@
+@import "slider";
+
+// The main boxes (about, download) on the home page
+.main-box {
+  @extend .content-box;
+
+  // We flex the contents mainly so we can push the download form to the bottom of its box
+  display: flex;
+  flex-flow: column;
+
+  // Allow comfortable two column layout
+  flex: 0 0 35%;
+  max-width: 35%;
+
+  // Force one column layout on narrow screens
+  @media only screen and (max-width: 760px) {
+    flex: 0 0 85%;
+    max-width: 85%;
+  }
+}
+
+// Labels that should be aligned with preceding text (e.g. for checkboxes after text)
+.baseline-label {
+  align-self: baseline;
+}
+
+#download-form {
+  margin-top: auto;
+}

@@ -1,0 +1,11 @@
+footer {
+  font-size: 0.9rem;
+  padding: 1.5rem .5rem;
+  text-align: center;
+  background-color: #f0f0f0;
+
+  a, p {
+    @extend .text-muted;
+    margin: 0;
+  }
+}

@@ -1,0 +1,33 @@
+.box-container {
+  @extend .row;
+  @extend .no-gutters;
+  @extend .justify-content-center;
+  @extend .px-4;
+}
+
+.content-box {
+  @extend .m-4;
+  @extend .p-3;
+
+  background-color: rgba(255, 255, 255, 0.87);
+  border-radius: 10px;
+  text-align: left;
+
+  h3 {
+    text-align: center;
+  }
+}
+
+.wide-box {
+  @extend .content-box;
+  @extend .col;
+}
+
+#bg {
+  background-image: url("./assets/bg.jpg");
+  background-size: cover;
+  background-position-x: center;
+  background-attachment: fixed;
+  flex-grow: 1;
+}
+

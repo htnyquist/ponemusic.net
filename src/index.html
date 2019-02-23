@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<include src="components/head.html"></include>
+<body>
+<div id="bg">
+    <include src="components/topbars.html"></include>
+
+    <div class="box-container">
+        <div class="col main-box">
+            <h3>About</h3>
+            <p>
+                The Pony fandom has produced an amazing amount of music of all kinds,
+                welcome to its largest, organized, high-quality music archive!
+                For the March 2019 release we have tens of thousands of tracks from 3000 artists, and over 100 albums.<br/>
+                <br/>
+                Consider this a spiritual successor to the <a href="https://ponyvillelive.com/mlpma">MLP Music Archive</a>,
+                but actively maintained and gathering songs from the best public and private sources available.<br/>
+                <br/>
+                The Raw archive is massive, with over 500 GB of single tracks plus 100 GB of albums.
+                You'll find both brand new tracks, and old forgotten ones that few people still have.
+            </p>
+        </div>
+        <div class="col main-box">
+            <h3>Download</h3>
+            <p>
+                The High Quality version is recommended if you just want to listen.<br/>
+                It's designed so that you shouldn't hear the difference with the Raw version.<br/>
+                If you're short on space, Phone Quality is very compact and still sounds fine.
+            </p>
+            <form id="download-form">
+                <div class="form-group">
+                    <span class="mr-2">Customize contents:</span>
+                    <div class="form-check-inline">
+                        <input type="checkbox" class="form-check-input" id="artists" checked>
+                        <label class="form-check-label baseline-label" for="artists">Artist folders</label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input type="checkbox" class="form-check-input" id="albums" checked>
+                        <label class="form-check-label baseline-label" for="albums">Compilation albums</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="quality-slider">Download format:</label>
+                    <div class="slider">
+                        <input type="range" class="custom-range" min="0" max="2" value="1" id="quality-slider">
+                    </div>
+                    <div class="row no-gutters slider-labels">
+                        <div class="col text-left">Raw Quality</div>
+                        <div class="col text-center">High Quality</div>
+                        <div class="col text-right">Phone Quality</div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary" id="download-button">Download</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<include src="components/footer.html"></include>
+</body>
+</html>
