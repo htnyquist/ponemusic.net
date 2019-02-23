@@ -1,6 +1,5 @@
 body {
   @extend .text-dark;
-
   background-color: #fcfcfc;
 }
 
@@ -17,6 +16,20 @@ a {
   background-color: rgba(255, 255, 255, 0.87);
   border-radius: 10px;
   text-align: left;
+
+  // We flex the contents mainly so we can push the download form to the bottom of its box
+  display: flex;
+  flex-flow: column;
+
+  // Allow comfortable two column layout
+  flex: 0 0 35%;
+  max-width: 35%;
+
+  // Force one column layout on narrow screens
+  @media only screen and (max-width: 760px) {
+    flex: 0 0 85%;
+    max-width: 85%;
+  }
 
   h3 {
     text-align: center;
@@ -36,10 +49,11 @@ a {
 }
 
 #title {
-  padding: 2rem;
-  margin-bottom: 2rem;
-  text-align: center;
   background-color: rgba(255, 255, 255, 0.4);
+}
+
+#download-form {
+  margin-top: auto;
 }
 
 #footer {
