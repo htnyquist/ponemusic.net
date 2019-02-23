@@ -1,0 +1,44 @@
+body {
+  @extend .text-dark;
+
+  background-color: #fcfcfc;
+}
+
+a {
+  @extend .text-dark;
+  text-decoration: underline;
+}
+
+#bg {
+  background-image: url("/assets/bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-x: center;
+}
+
+#title {
+  padding: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+#footer {
+  @extend .text-muted;
+
+  text-align: center;
+  background-color: #f0f0f0;
+
+  a {
+    @extend .text-muted;
+  }
+}
+
+// The main boxes (about, download) on the home page
+.main-box {
+  @extend .m-4;
+  @extend .p-3;
+
+  background-color: rgba(255, 255, 255, 0.87);
+  border-radius: 10px;
+}
