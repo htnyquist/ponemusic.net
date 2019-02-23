@@ -1,10 +1,15 @@
 body {
   @extend .text-dark;
+
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column;
   background-color: #fcfcfc;
 }
 
 a {
   @extend .text-dark;
+
   text-decoration: underline;
 }
 
@@ -46,6 +51,7 @@ a {
   background-size: cover;
   background-repeat: no-repeat;
   background-position-x: center;
+  flex: 1;
 }
 
 #title {
