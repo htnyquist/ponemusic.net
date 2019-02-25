@@ -1,0 +1,13 @@
+@import "navbar/index";
+@import "slider";
+
+/* Styles moved in this file will not be shared in common.scss, so must not depend on Bootstrap */
+
+// Labels that should be aligned with preceding text (e.g. for checkboxes after text)
+.baseline-label {
+  align-self: baseline;
+}
+
+#download-form {
+  margin-top: auto;
+}

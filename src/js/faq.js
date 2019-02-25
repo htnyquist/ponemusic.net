@@ -1,2 +1,1 @@
-import '../css/common/navbar/faq.scss';
-
+import '../css/faq.scss';

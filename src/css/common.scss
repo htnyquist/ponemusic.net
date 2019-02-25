@@ -19,12 +19,10 @@
 /* Local styles */
 
 // Shared CSS
+// Putting some per-page styles in the common bundle avoids duplicating all of bootstrap in each page's bundle
+@import "common/index/index";
 @import "common/toplevel";
 @import "common/content";
 @import "common/title";
 @import "common/footer";
-@import "common/navbar";
-
-// Per-page styles
-// Putting per-page styles in the common bundle avoids duplicating all of bootstrap in each page's bundle
-@import "index";
+@import "navbar";

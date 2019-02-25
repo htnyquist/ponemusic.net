@@ -1,5 +1,3 @@
-@import "slider";
-
 // The main boxes (about, download) on the home page
 .main-box {
   @extend .content-box;
@@ -17,13 +15,4 @@
     flex: 0 0 85%;
     max-width: 85%;
   }
-}
-
-// Labels that should be aligned with preceding text (e.g. for checkboxes after text)
-.baseline-label {
-  align-self: baseline;
-}
-
-#download-form {
-  margin-top: auto;
 }

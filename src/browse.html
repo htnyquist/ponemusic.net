@@ -8,10 +8,34 @@
     <div class="box-container">
         <div class="wide-box">
             <h3>Browse the Archive online</h3>
+            <br/>
             <p>
+                If you just want to look for some song without opening a torrent file,
+                this page will stream from the High Quality version of the archive.<br/>
+                Note that the archive's site isn't meant to be a music streaming service so don't expect anything fancy!<br/>
 
+                <span class="font-italic">Go to the home page if you want to download the songs.</span>
             </p>
+
+            <h4>Current path: Pony Music Archive/<span id="curpath"></span></h4>
+            <ul id="dirlist">
+                <li>Loading archive contents...</li>
+            </ul>
         </div>
+    </div>
+</div>
+
+<div id="audioModal" class="modal">
+    <div class="modal-content container align-self-center">
+        <p id="audioName"></p>
+        <audio controls
+               id="audioTag"
+               type='audio/ogg; codecs="opus"'
+               src="">
+            Your browser doesn't seem to support Opus audio, sorry...
+        </audio>
+        <br/>
+        <button type="button" class="btn btn-primary modal-close">Close</button>
     </div>
 </div>
 

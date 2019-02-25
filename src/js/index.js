@@ -1,4 +1,4 @@
-import '../css/common/navbar/index.scss';
+import '../css/index.scss';
 
 document.addEventListener("DOMContentLoaded", function() {
     setupDownloadEventHandlers();
