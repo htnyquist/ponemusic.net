@@ -2,6 +2,7 @@
 <html lang="en">
 <include src="components/head.html"></include>
 <body>
+
 <div id="bg">
     <include src="components/topbars.html"></include>
 
@@ -19,7 +20,7 @@
 
             <h4>Current path: Pony Music Archive/<span id="curpath"></span></h4>
             <ul id="dirlist">
-                <li>Loading archive contents...</li>
+                <li>Loading...</li>
             </ul>
         </div>
     </div>
@@ -34,6 +35,16 @@
                src="">
             Your browser doesn't seem to support Opus audio, sorry...
         </audio>
+        <div id="ogvContainer">
+            <div id="ogvPlay"></div>
+            <div id="ogvElapsed">0:00</div>
+            <div id="ogvScrubber"></div>
+            <div id="ogvTrack">
+                <div id="ogvTrackPlayed"></div>
+                <div id="ogvSeekZone"></div>
+            </div>
+            <div id="ogvRemaining">-0:00</div>
+        </div>
         <br/>
         <button type="button" class="btn btn-primary modal-close">Close</button>
     </div>

@@ -1,0 +1,89 @@
+.ogvNoTransition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
+
+#ogvContainer {
+  position: relative;
+  background-color: #242424;
+  height: 30px;
+  font-family: "Noto Sans", sans-serif;
+  font-weight: 300;
+  font-size: 0.8rem;
+  color: #bbb;
+  user-select: none;
+  cursor: default;
+
+  * {
+    display: inline-block;
+    position: relative;
+  }
+}
+
+#ogvPlay {
+  top: 8px;
+  left: 20px;
+  width: 0;
+  height: 14px;
+  border-color: transparent transparent transparent #ddd;
+  border-style: solid;
+  border-width: 7px 0 7px 11px;
+  padding-right: 5px;
+
+  transition: 100ms all ease;
+  will-change: border-width;
+
+  &.ogvPause {
+    border-style: double;
+    border-width: 0 0 0 12px;
+  }
+}
+
+#ogvElapsed {
+  top: 6px;
+  left: 25px;
+}
+
+#ogvRemaining {
+  top: 6px;
+  left: 40px;
+}
+
+#ogvTrack {
+  height: 5px;
+  width: calc(100% - 145px);
+  left: 30px;
+  top: 4px;
+  background-color: #555;
+  border-radius: 4px;
+}
+
+#ogvTrackPlayed {
+  position: absolute;
+  height: 5px;
+  border-radius: 4px;
+  background-color: #999;
+  width: 0;
+  transition: width 1.5s linear;
+}
+
+#ogvSeekZone {
+  position: absolute;
+  top: -5px;
+  height: 13px;
+  width: 100%;
+  z-index: 3;
+}
+
+#ogvScrubber {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: #ddd;
+  left: 40px;
+  top: 6px;
+  z-index: 2;
+  transition: left 1.5s linear;
+}

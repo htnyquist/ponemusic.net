@@ -1,12 +1,18 @@
 @import "navbar/browse";
+@import "player";
 
 audio {
   width: 100%;
   padding-bottom: 1rem;
 }
 
+.visibilityHidden {
+  visibility: hidden !important;
+}
+
 .modal {
-  display: none;
+  visibility: hidden;
+  display: flex;
   position: fixed;
   z-index: 1;
   left: 0;

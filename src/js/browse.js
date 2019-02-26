@@ -6,26 +6,50 @@ let curDir = contentsRoot;
 let curPath = [];
 let songTitle = "";
 
+// Either a real <audio> tag or an OGV player and container
+let audioPlayer;
+let audioContainer;
+
 document.addEventListener("DOMContentLoaded", function() {
     const dirList = document.getElementById('dirlist');
     const curPathNode = document.getElementById('curpath');
-    const audioTag = document.getElementById('audioTag');
     const audioName = document.getElementById('audioName');
     const audioModal = document.getElementById('audioModal');
     const audioModalClose = document.getElementsByClassName("modal-close")[0];
+    const audioTag = document.getElementById('audioTag');
 
-    audioModalClose.onclick = closeAudioModal;
-    window.onclick = function(event) {
+    audioModalClose.addEventListener('click', closeAudioModal);
+    window.addEventListener('click', function(event) {
         if (event.target === audioModal) {
             closeAudioModal();
         }
-    };
-    audioTag.onloadedmetadata = function() {
-        audioTag.style.display = "initial";
-        audioName.innerText = 'Playing "'+songTitle+'"';
-    };
+    });
 
-    printContents();
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    if (isSafari) {
+        audioTag.style.display = 'none';
+        const ogvScript = document.createElement('script');
+        ogvScript.onload = function () {
+            setupOgvPlayer();
+            finishSetup();
+        };
+        ogvScript.src = "./assets/ogvjs/ogv.js";
+        document.head.appendChild(ogvScript);
+    } else {
+        document.getElementById('ogvContainer').style.display = 'none';
+        audioPlayer = audioTag;
+        audioContainer = audioTag;
+        finishSetup();
+    }
+
+    function finishSetup() {
+        audioPlayer.addEventListener('loadedmetadata', function() {
+            audioContainer.classList.remove('visibilityHidden');
+            audioName.innerText = 'Playing "'+songTitle+'"';
+        });
+
+        printContents();
+    }
 
     function printContents() {
         dirList.innerHTML = "";
@@ -63,16 +87,16 @@ document.addEventListener("DOMContentLoaded", function() {
         } else {
             songTitle = entry['id'];
         }
-        audioName.innerText = 'Loading...';
-        audioTag.style.display = "none";
-        audioTag.src = streamBase + filePath;
-        audioModal.style.display = "flex";
-        audioTag.play();
+        audioPlayer.src = streamBase + filePath;
+        audioPlayer.play();
+        audioName.innerText = 'Loading song...';
+        audioContainer.classList.add('visibilityHidden');
+        audioModal.style.visibility = "visible";
     }
 
     function closeAudioModal() {
-        audioModal.style.display = "none";
-        audioTag.pause();
+        audioModal.style.visibility = "hidden";
+        audioPlayer.pause();
     }
 
     function dirClicked(entry) {
@@ -88,3 +112,131 @@ document.addEventListener("DOMContentLoaded", function() {
         printContents();
     }
 });
+
+function setupOgvPlayer() {
+    const ogvContainer = document.getElementById('ogvContainer');
+    const ogvElapsed = document.getElementById('ogvElapsed');
+    const ogvRemaining = document.getElementById('ogvRemaining');
+    const ogvPlayPause = document.getElementById('ogvPlay');
+    const ogvTrack = document.getElementById('ogvTrack');
+    const ogvTrackPlayed = document.getElementById('ogvTrackPlayed');
+    const ogvSeekZone = document.getElementById('ogvSeekZone');
+    const ogvScrubber = document.getElementById('ogvScrubber');
+    const ogvPlayer = new OGVPlayer();
+    ogvContainer.appendChild(ogvPlayer);
+
+    audioPlayer = ogvPlayer;
+    audioContainer = ogvContainer;
+
+    const scrubberStartPos = parseInt(window.getComputedStyle(ogvScrubber).left);
+    const trackWidth = parseInt(window.getComputedStyle(ogvTrack).getPropertyValue('width'));
+    let pausedBeforeSeeking = true;
+    let wasHiddenDuringTimeUpdate = false;
+
+    ogvSeekZone.addEventListener('mousedown', function(e) {
+        const duration = ogvPlayer.duration;
+        if (!duration)
+            return;
+
+        pausedBeforeSeeking = ogvPlayer.paused;
+        ogvPlayer.pause();
+        window.addEventListener('mousemove', ogvOnSeekEvent);
+        window.addEventListener('mouseup', ogvOnSeekEnd);
+        ogvOnSeekEvent(e);
+    });
+
+    ogvPlayPause.addEventListener('click', function() {
+        if (ogvPlayer.paused) {
+            ogvPlayer.play();
+            ogvPlayPause.className = 'ogvPause';
+        } else {
+            ogvPlayer.pause();
+            ogvPlayPause.className = '';
+        }
+    });
+
+    document.addEventListener('visibilitychange', ogvOnTimeUpdate, true);
+
+    ogvPlayer.addEventListener('loadedmetadata', ogvOnReadyToPlay);
+    ogvPlayer.addEventListener('ended', ogvOnReadyToPlay);
+    ogvPlayer.addEventListener('timeupdate', ogvOnTimeUpdate);
+    ogvPlayer.addEventListener('play', function () {
+        ogvPlayPause.className = 'ogvPause';
+    });
+
+    function ogvOnReadyToPlay() {
+        ogvPlayPause.className = '';
+        ogvElapsed.innerText = '0:00';
+        ogvRemaining.innerText = '-'+formatDuration(ogvPlayer.duration);
+        ogvDisableTransition();
+        ogvScrubber.style.left = scrubberStartPos+'px';
+        ogvTrackPlayed.style.width = '0';
+        ogvEnableTransition();
+    }
+
+    function ogvOnSeekEvent(e) {
+        const xpos = clamp(e.clientX - ogvSeekZone.getBoundingClientRect().left, 0, trackWidth);
+        const scrubberRatio = xpos / trackWidth;
+
+        ogvElapsed.innerText = formatDuration(ogvPlayer.duration*scrubberRatio);
+        ogvRemaining.innerText = '-'+formatDuration(ogvPlayer.duration - ogvPlayer.duration*scrubberRatio);
+
+        ogvDisableTransition();
+        ogvScrubber.style.left = Math.round(scrubberStartPos+scrubberRatio*trackWidth)+'px';
+        ogvTrackPlayed.style.width = scrubberRatio*100+'%';
+        ogvEnableTransition();
+    }
+
+    function ogvOnSeekEnd(e) {
+        const xpos = clamp(e.clientX - ogvSeekZone.getBoundingClientRect().left, 0, trackWidth);
+        ogvPlayer.fastSeek(xpos / trackWidth * ogvPlayer.duration);
+        window.removeEventListener('mouseup', ogvOnSeekEnd);
+        window.removeEventListener('mousemove', ogvOnSeekEvent);
+        if (!pausedBeforeSeeking)
+            ogvPlayer.play();
+    }
+
+    function ogvDisableTransition() {
+        ogvScrubber.classList.add('ogvNoTransition');
+        ogvTrackPlayed.classList.add('ogvNoTransition');
+    }
+
+    function ogvEnableTransition() {
+        ogvScrubber.offsetHeight;
+        ogvTrackPlayed.offsetHeight;
+        ogvScrubber.classList.remove('ogvNoTransition');
+        ogvTrackPlayed.classList.remove('ogvNoTransition');
+    }
+
+    function ogvOnTimeUpdate() {
+        if (document.hidden) {
+            wasHiddenDuringTimeUpdate = true;
+            return;
+        }
+        const currentTime = ogvPlayer.currentTime;
+        ogvElapsed.innerText = formatDuration(currentTime);
+        ogvRemaining.innerText = '-'+formatDuration(ogvPlayer.duration - currentTime);
+        const scrubberRatio = currentTime / ogvPlayer.duration;
+
+        if (wasHiddenDuringTimeUpdate)
+            ogvDisableTransition();
+        ogvScrubber.style.left = Math.round(scrubberStartPos+scrubberRatio*trackWidth)+'px';
+        ogvTrackPlayed.style.width = scrubberRatio*100+'%';
+        if (wasHiddenDuringTimeUpdate)
+            ogvEnableTransition();
+        wasHiddenDuringTimeUpdate = false;
+    }
+}
+
+function clamp(n, min, max) {
+    return Math.min(Math.max(n, min), max);
+}
+
+function formatDuration(duration) {
+    let secs = duration;
+    let minutes = Math.round(secs / 60);
+    secs = Math.round(secs % 60);
+    let str = ''+minutes;
+    str += secs < 10 ? ':0' : ':';
+    return str+secs;
+}
