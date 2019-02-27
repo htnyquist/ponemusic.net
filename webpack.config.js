@@ -2,7 +2,7 @@ const path = require('path');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const pages = ['index', 'browse', 'faq'];
+const pages = ['index', 'browse', 'faq', 'soon'];
 const pageTemplatePlugins = pages.map((page) =>
     new HtmlWebpackPlugin({
         filename: page+'.html',
