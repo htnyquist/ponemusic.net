@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en">
-<include src="components/head.html"></include>
+<head>
+    <include src="components/head.html"></include>
+    <link rel="preload" href="assets/contents.json" as="fetch" crossorigin="anonymous">
+</head>
 <body>
 
 <div id="bg">
@@ -26,7 +29,7 @@
     </div>
 </div>
 
-<div id="audioModal" class="modal">
+<div id="audioModal" class="modal" style="visibility: hidden">
     <div class="modal-content container align-self-center">
         <p id="audioName"></p>
         <audio controls

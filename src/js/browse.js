@@ -1,8 +1,11 @@
 import '../css/browse.scss';
-import contentsRoot from '../../dist/assets/contents.json';
+
+// We wait for all scripts to be loaded before continuing
+let contentsRootLoaded = false;
+let audioPlayerLoaded = false;
 
 let parentDirs = [];
-let curDir = contentsRoot;
+let curDir = null;
 let curPath = [];
 let songTitle = "";
 
@@ -25,13 +28,23 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+    const contentsReq = new XMLHttpRequest();
+    contentsReq.addEventListener("load", function () {
+        contentsRootLoaded = true;
+        curDir = JSON.parse(this.responseText);
+        tryFinishSetup();
+    });
+    contentsReq.open("GET", "./assets/contents.json");
+    contentsReq.send();
+
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     if (isSafari) {
         audioTag.style.display = 'none';
         const ogvScript = document.createElement('script');
         ogvScript.onload = function () {
             setupOgvPlayer();
-            finishSetup();
+            audioPlayerLoaded = true;
+            tryFinishSetup();
         };
         ogvScript.src = "./assets/ogvjs/ogv.js";
         document.head.appendChild(ogvScript);
@@ -39,10 +52,14 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('ogvContainer').style.display = 'none';
         audioPlayer = audioTag;
         audioContainer = audioTag;
-        finishSetup();
+        audioPlayerLoaded = true;
+        tryFinishSetup();
     }
 
-    function finishSetup() {
+    function tryFinishSetup() {
+        if (!contentsRootLoaded || !audioPlayerLoaded)
+            return;
+
         audioPlayer.addEventListener('loadedmetadata', function() {
             audioContainer.classList.remove('visibilityHidden');
             audioName.innerText = 'Playing "'+songTitle+'"';
