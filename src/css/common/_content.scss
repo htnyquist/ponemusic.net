@@ -3,6 +3,7 @@
   @extend .no-gutters;
   @extend .justify-content-center;
   @extend .px-4;
+  flex-grow: 1;
 }
 
 .content-box {
@@ -23,8 +24,13 @@
   @extend .col;
 }
 
-.full-height {
-  height: 100%;
+.display-flex {
+  display: flex;
+}
+
+// IE11 wants any height on the parent of a flex-grow, or it gets ignored
+.ie11-zero-height-hack {
+  height: 0;
 }
 
 #bg {
