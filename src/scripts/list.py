@@ -10,7 +10,7 @@ def listdirs(path):
         contents['list'] = []
         for dirent in os.listdir(path):
             contents['list'].append(listdirs(path+'/'+dirent))
-        contents['list'].sort(key=lambda e: e['id'])
+        contents['list'].sort(key=lambda e: e['id'].lower())
     else:
         contents['id'] = os.path.basename(path)[:-5]
     
