@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function fileClicked(entry) {
-        const streamBase = 'https://f001.backblazeb2.com/file/music-archive-storage/';
+        const streamBase = 'https://storage.ponemusic.net/stream/';
         const filePath = curPath.map(encodeURIComponent).join('/') + '/' + encodeURIComponent(entry['id']) + '.opus';
         if (curPath[0] === 'Artists' && curPath[1] !== undefined) {
             songTitle = curPath[1] + ' - ' + entry['id'];

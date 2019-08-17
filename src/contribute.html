@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <include src="components/head.html"></include>
+    <title>The Pony Music Archive - Contribute</title>
+</head>
+<body>
+<div id="bg">
+    <include src="components/topbars.html"></include>
+
+    <div class="box-container">
+        <div class="main-box">
+            <h3>Contributions are welcome!</h3>
+            <p>
+                <br/>
+                Despite our best efforts the Pony Music Archive is still incomplete.<br/>
+                You can help make sure nothing is lost to time by submitting any missing content you find!<br/>
+                If you notice a musician has been overlooked, a song is missing, or any other issue with the archive that you can't submit a file for,
+                please don't hesitate to reach out to the archive's maintainers at <a href="mailto:htnyquist@gmail.com">htnyquist@gmail.com</a>.<br/>
+
+                <br/>
+
+                <form id="upload-form" method="POST" action="https://storage.ponemusic.net/upload" enctype="multipart/form-data">
+                    <h4 class="text-center">Submit content</h4>
+                    <div class="form-group row">
+                        <label for="upload-email" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="email" id="upload-email" placeholder="(Optional)">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="upload-comment" class="col-sm-2 col-form-label">Comment</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" name="comment" id="upload-comment" placeholder="(Appreciated!)"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group text-left">
+                        <label for="upload-files">Select files to submit: </label>
+                        <input type="file" class="col-sm-auto" name="files" id="upload-files" multiple>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary text-center" id="upload-button">Upload</button>
+                    </div>
+                </form>
+
+                <p class="fineprint">
+                    We accept WAV, FLAC, ALAC, MP3, OGG, and OPUS audio files. Making a ZIP file is also okay.<br/>
+                    Submissions are limited to 50 files and 10GB per IP and must contain music suitable for the archive.<br/>
+                    Please understand that we will not accept songs from artists that have requested to be excluded.<br/>
+                    Uploads are reviewed by the maintainers and gratuitous abuse may result in an IP ban.<br/>
+                </p>
+            </p>
+        </div>
+    </div>
+</div>
+
+<include src="components/footer.html"></include>
+</body>
+</html>

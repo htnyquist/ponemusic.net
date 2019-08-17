@@ -1,13 +1,15 @@
 const path = require('path');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 
-const pages = ['index', 'browse', 'faq', 'soon'];
+const pages = ['index', 'browse', 'contribute', 'faq', 'soon'];
 const pageTemplatePlugins = pages.map((page) =>
     new HtmlWebpackPlugin({
         filename: page+'.html',
         template: path.resolve(__dirname, 'src', page+'.html'),
         chunks: ['common', page],
+        inlineSource: '('+page+'.(css|js)$)|(common.(css|js)$)',
     })
 );
 
@@ -29,8 +31,12 @@ module.exports = (env, argv) => ({
         inline: true
     },
     plugins: [
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            chunkFilename: '[id].css',
+        }),
         ...pageTemplatePlugins,
-        //new BundleAnalyzerPlugin(),
+        new HtmlWebpackInlineSourcePlugin(HtmlWebpackPlugin),
     ],
     module: {
         rules: [
@@ -38,8 +44,10 @@ module.exports = (env, argv) => ({
                 test: /\.(scss)$/,
                 use: [
                     {
-                        // Adds CSS to the DOM by injecting a `<style>` tag
-                        loader: 'style-loader'
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            hmr: process.env.NODE_ENV === 'development',
+                        },
                     },
                     {
                         // Interprets `@import` and `url()` like `import/require()` and will resolve them
