@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function setupDownloadEventHandlers() {
-    const albumSizes = [114.4, 13.5, 9];
-    const artistsSizes = [611.1, 115.7, 75.0];
+    const albumSizes = [116.9, 13.7, 9];
+    const artistsSizes = [615.8, 116.6, 75.5];
     const version = "19.09";
     const qualityNames = ["Raw Quality", "High Quality", "Phone Quality"];
 

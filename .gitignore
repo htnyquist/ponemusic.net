@@ -1,8 +1,5 @@
 .idea/
 node_modules/
-dist/*.js
-dist/*.css
-dist/*.html
-dist/assets/*.torrent
+dist/*
 yarn.lock
 

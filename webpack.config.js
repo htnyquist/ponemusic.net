@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const pages = ['index', 'browse', 'contribute', 'faq', 'soon'];
 const pageTemplatePlugins = pages.map((page) =>
@@ -37,6 +38,10 @@ module.exports = (env, argv) => ({
         }),
         ...pageTemplatePlugins,
         new HtmlWebpackInlineSourcePlugin(HtmlWebpackPlugin),
+        new CopyPlugin([
+            { from: 'src/sitemap.xml' },
+            { from: 'src/assets/', to: 'assets/' },
+        ]),
     ],
     module: {
         rules: [

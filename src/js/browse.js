@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const audioModal = document.getElementById('audioModal');
     const audioModalClose = document.getElementsByClassName("modal-close")[0];
     const audioTag = document.getElementById('audioTag');
+    const playRandomButton = document.getElementById('randomSong');
 
     audioModalClose.addEventListener('click', closeAudioModal);
     window.addEventListener('click', function(event) {
@@ -29,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     const contentsReq = new XMLHttpRequest();
-    contentsReq.addEventListener("load", function () {
+    contentsReq.addEventListener("load", function() {
         contentsRootLoaded = true;
         curDir = JSON.parse(this.responseText);
         tryFinishSetup();
@@ -55,6 +56,33 @@ document.addEventListener("DOMContentLoaded", function() {
         audioPlayerLoaded = true;
         tryFinishSetup();
     }
+
+    playRandomButton.addEventListener('click', function() {
+        if (!contentsRootLoaded || !audioPlayerLoaded)
+            return;
+
+        if (parentDirs.length) {
+            curPath = [];
+            curDir = parentDirs[0];
+            parentDirs = [];
+        }
+
+        let curEntry = curDir;
+        let isDir = true;
+        while (isDir) {
+            const randomIndex = Math.floor(Math.random() * Math.floor(curEntry['list'].length));
+            curEntry = curEntry['list'][randomIndex];
+
+            isDir = curEntry['list'] !== undefined;
+            if (isDir) {
+                curPath.push(curEntry['id']);
+                parentDirs.push(curDir);
+                curDir = curEntry;
+            }
+        }
+        printContents();
+        fileClicked(curEntry);
+    });
 
     function tryFinishSetup() {
         if (!contentsRootLoaded || !audioPlayerLoaded)
