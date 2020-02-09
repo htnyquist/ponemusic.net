@@ -84,6 +84,37 @@ document.addEventListener("DOMContentLoaded", function() {
         fileClicked(curEntry);
     });
 
+    function processURLFragments() {
+        const hash = window.location.href.split("#")[1] || "";
+        const parts = hash.split('&').reduce(function (result, item) {
+            var parts = item.split('=');
+            result[parts[0]] = parts[1];
+            return result;
+        }, {});
+        if (!'path' in parts)
+            return;
+        const pathElems = decodeURIComponent(parts['path']).split('/');
+
+        for (const pathElem of pathElems) {
+            if (!pathElem)
+                continue;
+
+            let targetEntry = null;
+            for (const entry of curDir['list']) {
+                if (entry['id'] === pathElem) {
+                    targetEntry = entry;
+                    break;
+                }
+            }
+            if (!targetEntry)
+                break;
+            if (targetEntry['list'] !== undefined)
+                dirClicked(targetEntry);
+            else
+                fileClicked(targetEntry);
+        }
+    }
+
     function tryFinishSetup() {
         if (!contentsRootLoaded || !audioPlayerLoaded)
             return;
@@ -92,6 +123,8 @@ document.addEventListener("DOMContentLoaded", function() {
             audioContainer.classList.remove('visibilityHidden');
             audioName.innerText = 'Playing "'+songTitle+'"';
         });
+
+        processURLFragments();
 
         printContents();
     }
@@ -126,7 +159,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function fileClicked(entry) {
         const streamBase = 'https://storage.ponemusic.net/stream/';
-        const filePath = curPath.map(encodeURIComponent).join('/') + '/' + encodeURIComponent(entry['id']) + '.opus';
+        const fileBasePath = curPath.map(encodeURIComponent).join('/') + '/' + encodeURIComponent(entry['id']);
+        const filePath = fileBasePath + '.opus';
+        window.location.hash = `#path=${fileBasePath}`;
         if (curPath[0] === 'Artists' && curPath[1] !== undefined) {
             songTitle = curPath[1] + ' - ' + entry['id'];
         } else {
@@ -148,12 +183,14 @@ document.addEventListener("DOMContentLoaded", function() {
         curPath.push(entry['id']);
         parentDirs.push(curDir);
         curDir = entry;
+        window.location.hash = `#path=${encodeURIComponent(curPath.join('/'))}`;
         printContents();
     }
 
     function parentClicked() {
         curPath.pop();
         curDir = parentDirs.pop();
+        window.location.hash = `#path=${encodeURIComponent(curPath.join('/'))}`;
         printContents();
     }
 });
