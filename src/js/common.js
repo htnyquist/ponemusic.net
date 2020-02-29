@@ -13,9 +13,10 @@ document.addEventListener("DOMContentLoaded", function() {
         "Way too many Winter Wrap Up remixes",
         "Try a random folder, get hidden gems (or not!)",
         "Now with 20% more covert art!",
-        "700 GB of music? That's an academy record!",
+        "800 GB of music? That's an academy record!",
         "Hard drive sold separately",
         "Find something you like? Support your favorite artists!",
+        "Ten More Years!",
     ];
 
     let lead = document.getElementById('title-lead');
