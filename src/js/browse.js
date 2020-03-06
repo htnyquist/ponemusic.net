@@ -149,7 +149,17 @@ document.addEventListener("DOMContentLoaded", function() {
                 item.appendChild(document.createTextNode(entry['id'] + '/'));
                 item.onclick = function() { dirClicked(entry) };
             } else {
+                const bitrate = entry['r']
+                let format;
+                if (bitrate)
+                    format = "MP3 "+bitrate+"kbps in Raw";
+                else
+                    format = "FLAC in Raw";
+                const formatItem = document.createElement('span');
+                formatItem.className = 'format';
+                formatItem.appendChild(document.createTextNode(format));
                 item.appendChild(document.createTextNode(entry['id']));
+                item.appendChild(formatItem);
                 item.onclick = function() { fileClicked(entry) };
             }
 
