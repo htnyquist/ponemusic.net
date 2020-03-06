@@ -38,6 +38,7 @@ audio {
     padding: 0.2rem;
     padding-left: 0.5rem;
     cursor: pointer;
+    overflow: hidden;
   }
   li:nth-child(odd) {
     background: rgba(220, 220, 220, 0.6);
