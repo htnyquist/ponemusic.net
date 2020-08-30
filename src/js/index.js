@@ -5,9 +5,9 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function setupDownloadEventHandlers() {
-    const albumSizes = [136.8, 16.3, 10.8];
-    const artistsSizes = [705.3, 130.8, 84.7];
-    const version = "20.03";
+    const albumSizes = [147.6, 17.1, 11.3];
+    const artistsSizes = [732.3, 134.8, 87.3];
+    const version = "20.09";
     const qualityNames = ["Raw Quality", "High Quality", "Phone Quality"];
 
     const downloadForm = document.getElementById("download-form");
@@ -23,7 +23,7 @@ function setupDownloadEventHandlers() {
         const quality = qualitySlider.value;
         const size = albumSizes[quality] + artistsSizes[quality];
 
-        downloadButton.innerText = "Download ("+size.toFixed(1)+" GB)";
+        downloadButton.innerText = "Download ("+Math.round(size)+" GB)";
         downloadForm.action = "./assets/Pony Music Archive "+version+" ("+qualityNames[quality]+").torrent";
     }
 }
