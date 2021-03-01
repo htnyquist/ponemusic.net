@@ -5,9 +5,9 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function setupDownloadEventHandlers() {
-    const albumSizes = [147.6, 17.1, 11.3];
-    const artistsSizes = [732.3, 134.8, 87.3];
-    const version = "20.09";
+    const albumSizes = [157.6, 18.0, 11.9];
+    const artistsSizes = [777.6, 138.6, 89.8];
+    const version = "21.03";
     const qualityNames = ["Raw Quality", "High Quality", "Phone Quality"];
 
     const downloadForm = document.getElementById("download-form");
